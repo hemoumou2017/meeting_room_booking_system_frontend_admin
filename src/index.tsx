@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-10-08 17:09:42
  * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-10-09 10:46:37
+ * @LastEditTime: 2024-10-09 16:53:21
  * @FilePath: /meeting_room_booking_system_frontend_admin/src/index.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,6 +25,9 @@ import { Menu } from './pages/Menu/Menu';
 import { ModifyMenu } from './pages/ModifyMenu/ModifyMenu';
 import { InfoModify } from './pages/InfoModify/InfoModify';
 import { PasswordModify } from './pages/PasswordModify/PasswordModify';
+import { MeetingRoomManage } from './pages/MeetingRoomManage/MeetingRoomManage';
+import { BookingManage } from './pages/BookingManage/BookingManage';
+import { Statistics } from './pages/Statistics/Statistics';
 
 const routes = [
   {
@@ -37,9 +40,26 @@ const routes = [
         element: <Menu></Menu>,
         children: [
           {
-            path: "user_manage",
-            element: <UserManage />,
-          }
+            path: '/',
+            element: <MeetingRoomManage/>
+        },
+        {
+            path: 'user_manage',
+            element: <UserManage/>
+        },
+        {
+            path: 'meeting_room_manage',
+            element: <MeetingRoomManage/>
+        },
+        {
+            path: 'booking_manage',
+            element: <BookingManage/>
+        },
+        {
+            path: 'statistics',
+            element: <Statistics/>
+        }
+          
         ]
       },
       {

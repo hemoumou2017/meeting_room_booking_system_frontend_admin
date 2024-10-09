@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-10-08 17:27:59
  * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-10-09 11:26:52
+ * @LastEditTime: 2024-10-09 21:52:10
  * @FilePath: /meeting_room_booking_system_frontend_admin/src/interfaces/interfaces.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,8 @@ import { message } from "antd";
 import axios from "axios";
 import { UserInfo } from "../pages/InfoModify/InfoModify";
 import { UpdatePassword } from "../pages/PasswordModify/PasswordModify";
+import { CreateMeetingRoomForm } from "../pages/MeetingRoomManage/CreateMeetingRoomModal";
+import { UpdateMeetingRoom } from "../pages/MeetingRoomManage/UpdateMeetingRoom";
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3001/',
@@ -110,4 +112,33 @@ export async function updatePasswordCaptcha(email: string) {
 
 export async function updatePassword(data: UpdatePassword) {
     return await axiosInstance.post('/user/admin/update_password', data);
+}
+
+export async function getMeetingRoomList(name: string, capacity: number, equipment: string, pageNo: number, pageSize: number) {
+    return await axiosInstance.get('/meeting-room/list', {
+        params: {
+            name,
+            capacity,
+            equipment,
+            pageNo,
+            pageSize
+        }
+    });
+}
+
+export async function deleteMeetingRoom(id: number) {
+    return await axiosInstance.delete('/meeting-room/' + id );
+}
+
+
+export async function createMeetingRoom(meetingRoom: CreateMeetingRoomForm) {
+    return await axiosInstance.post('/meeting-room/create', meetingRoom);
+}
+
+export async function updateMeetingRoom(meetingRoom: UpdateMeetingRoom) {
+    return await axiosInstance.put('/meeting-room/update', meetingRoom);
+}
+
+export async function findMeetingRoom(id: number) {
+    return await axiosInstance.get('/meeting-room/' + id);
 }
