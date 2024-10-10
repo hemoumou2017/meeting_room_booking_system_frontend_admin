@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2024-10-08 17:27:59
  * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-10-09 21:52:10
+ * @LastEditTime: 2024-10-10 16:55:39
  * @FilePath: /meeting_room_booking_system_frontend_admin/src/interfaces/interfaces.tsx
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -12,6 +12,8 @@ import { UserInfo } from "../pages/InfoModify/InfoModify";
 import { UpdatePassword } from "../pages/PasswordModify/PasswordModify";
 import { CreateMeetingRoomForm } from "../pages/MeetingRoomManage/CreateMeetingRoomModal";
 import { UpdateMeetingRoom } from "../pages/MeetingRoomManage/UpdateMeetingRoom";
+import { SearchBooking } from "../pages/BookingManage/BookingManage";
+import dayjs from "dayjs";
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:3001/',
@@ -141,4 +143,48 @@ export async function updateMeetingRoom(meetingRoom: UpdateMeetingRoom) {
 
 export async function findMeetingRoom(id: number) {
     return await axiosInstance.get('/meeting-room/' + id);
+}
+
+
+
+export async function getBookingList(searchBooking: SearchBooking, pageNo: number, pageSize: number) {
+    let bookingTimeRangeStart;
+    let bookingTimeRangeEnd;
+    
+    if (searchBooking.rangeStartDate && searchBooking.rangeStartTime) {
+        const rangeStartDateStr = dayjs(searchBooking.rangeStartDate).format('YYYY-MM-DD');
+        const rangeStartTimeStr = dayjs(searchBooking.rangeStartTime).format('HH:mm');
+        bookingTimeRangeStart = dayjs(rangeStartDateStr + ' ' + rangeStartTimeStr).valueOf();
+    }
+
+    if (searchBooking.rangeEndDate && searchBooking.rangeEndTime) {
+        const rangeEndDateStr = dayjs(searchBooking.rangeEndDate).format('YYYY-MM-DD');
+        const rangeEndTimeStr = dayjs(searchBooking.rangeEndTime).format('HH:mm');
+        bookingTimeRangeEnd = dayjs(rangeEndDateStr + ' ' + rangeEndTimeStr).valueOf();
+    }
+
+    return await axiosInstance.get('/booking/list', {
+        params: {
+            username: searchBooking.username,
+            meetingRoomName: searchBooking.meetingRoomName,
+            meetingRoomPosition: searchBooking.meetingRoomPosition,
+            bookingTimeRangeStart,
+            bookingTimeRangeEnd,
+            pageNo,
+            pageSize
+        }
+    })
+}
+
+
+export async function apply(id: number) {
+    return await axiosInstance.get('/booking/apply/'+ id)
+}
+
+export async function reject(id: number) {
+    return await axiosInstance.get('/booking/reject/' + id);
+}
+
+export async function unbind(id: number) {
+    return await axiosInstance.get('/booking/unbind/' + id);
 }
