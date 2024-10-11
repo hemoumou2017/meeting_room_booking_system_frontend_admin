@@ -1,0 +1,17 @@
+#statistics-container {
+    padding: 20px;
+}
+#statistics-container .statistics-form {
+    margin-bottom: 40px;
+}
+#statistics-container .statistics-chart-container {
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    width: 100%;
+    justify-content: space-around;
+}
+#statistics-container .statistics-chart-container .statistics-chart {
+    flex: 1;
+    width: 500px;
+}
